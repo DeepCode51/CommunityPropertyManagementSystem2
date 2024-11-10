@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyComplainInfoDao">
+    
+	<sql id="wyComplainInfoColumns">
+		a.id AS "id",
+		a.content AS "content",
+		a.tousu_user AS "tousuUser",
+		a.tousu_tel AS "tousuTel",
+		a.tousu_time AS "tousuTime",
+		a.luru_user AS "luruUser",
+		a.add_time AS "addTime",
+		a.is_call AS "isCall",
+		a.remark AS "remark"
+	</sql>
+	
+	<sql id="wyComplainInfoJoins">
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyComplainInfo">
+		SELECT 
+			<include refid="wyComplainInfoColumns"/>
+		FROM wy_complain_info a
+		<include refid="wyComplainInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyComplainInfo">
+		SELECT 
+			<include refid="wyComplainInfoColumns"/>
+		FROM wy_complain_info a
+		<include refid="wyComplainInfoJoins"/>
+		<where>
+			
+			<if test="content != null and content != ''">
+				AND a.content LIKE  concat('%',#{content},'%')
+			</if>
+			<if test="tousuUser != null and tousuUser != ''">
+				AND a.tousu_user = #{tousuUser}
+			</if>
+			<if test="isCall != null and isCall != ''">
+				AND a.is_call = #{isCall}
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyComplainInfo">
+		SELECT 
+			<include refid="wyComplainInfoColumns"/>
+		FROM wy_complain_info a
+		<include refid="wyComplainInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_complain_info(
+			id,
+			content,
+			tousu_user,
+			tousu_tel,
+			tousu_time,
+			luru_user,
+			add_time,
+			is_call,
+			remark
+		) VALUES (
+			#{id},
+			#{content},
+			#{tousuUser},
+			#{tousuTel},
+			#{tousuTime},
+			#{luruUser},
+			#{addTime},
+			#{isCall},
+			#{remark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_complain_info SET 	
+			content = #{content},
+			tousu_user = #{tousuUser},
+			tousu_tel = #{tousuTel},
+			tousu_time = #{tousuTime},
+			luru_user = #{luruUser},
+			add_time = #{addTime},
+			is_call = #{isCall},
+			remark = #{remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_complain_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

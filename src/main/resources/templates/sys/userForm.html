@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>用户添加修改</title>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+    <script type="text/javascript">
+        $(function() {})
+        $(document).ready(function() {
+            $("#inputForm").validate({
+                rules : {
+                    username: {
+                        required : true
+                    },
+                    password: {
+                        required : true
+                    },
+                    role: {
+                        required : true
+                    },
+                    isBlock: {
+                        required : true
+                    },
+                },
+                messages : {
+                    username: {
+                        required : "用户名必填"
+                    },
+                    password: {
+                        required : "密码必填"
+                    },
+                    role: {
+                        required : "角色必填"
+                    },
+                    isBlock: {
+                        required : "是否锁定必填"
+                    },
+                }
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <br>
+    <!--
+    <ol class="breadcrumb">
+        <li class="active">添加数据</li>
+    </ol>-->
+
+    <form id="inputForm" action="/sys/user/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${user.id}" />
+        <div class="form-group" id="username">
+            <label for="username" class="col-sm-1 control-label">用户名<b class="error">*</b></label>
+            <div class="col-sm-6">
+                <input name="username" th:value="${user.username}" maxlength="255" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group" id="password">
+            <label for="password" class="col-sm-1 control-label">密码<b class="error">*</b></label>
+            <div class="col-sm-6">
+
+                <input name="password" th:value="${user.password}" htmlEscape="false" maxlength="255" class="form-control "/>
+            </div>
+        </div>
+        
+         <div class="form-group" id="isBlock">
+            <label for="tel" class="col-sm-1 control-label">电话<b class="error">*</b></label>
+            <div class="col-sm-6">
+                <input name="tel" th:value="${user.tel}" htmlEscape="false" maxlength="255" class="form-control "/>
+            </div>
+        </div>
+        
+         <div class="form-group" id="isBlock">
+            <label for="email" class="col-sm-1 control-label">邮箱<b class="error">*</b></label>
+            <div class="col-sm-6">
+                <input name="email" th:value="${user.email}" htmlEscape="false" maxlength="255" class="form-control "/>
+            </div>
+        </div>
+
+        <div class="form-group" id="role">
+            <label for="role" class="col-sm-1 control-label">角色<b class="error">*</b></label>
+            <div class="col-sm-6">
+                <label class="radio-inline">
+				  <input type="radio" name="role" value="1" th:checked="${user.role=='1'}"> 系统管理员
+				</label>
+				<label class="radio-inline">
+				  <input type="radio" name="role" value="2" th:checked="${user.role=='2'}"> 工作人员
+				</label>
+            </div>
+        </div>
+
+        <div class="form-group" id="isBlock">
+            <label for="isBlock" class="col-sm-1 control-label">是否锁定<b class="error">*</b></label>
+            <div class="col-sm-6">
+                <input name="isBlock" th:value="${user.isBlock}" htmlEscape="false" maxlength="255" class="form-control "/>
+            </div>
+        </div>
+        
+        
+        <div class="form-group" id="roleSelect">
+            <label class="col-sm-1 control-label"></label>
+            <div class="col-sm-6">
+               <button class="btn btn-success" type="submit">保 存</button>
+                <button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+            </div>
+        </div>
+
+    </form>
+</body>
+
+</html>

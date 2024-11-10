@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>系统通知管理</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.config.js" th:src="@{/ueditor/ueditor.config.js}"></script>
+    <script type="text/javascript" charset="utf-8" src="/ueditor/ueditor.all.min.js" th:src="@{/ueditor/ueditor.all.min.js}"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="/ueditor/lang/zh-cn/zh-cn.js" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#inputForm").validate({
+			rules : {
+				title: {
+					required : true
+				},
+				content: {
+					required : true
+				},
+			},
+			messages : {
+				title: {
+					required : "标题必填"
+				},
+				content: {
+					required : "内容必填"
+				}
+			}
+		})
+		});
+		
+		 //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+	    var ue = UE.getEditor('content',{
+	    	toolbars: [
+	                   [
+	                       'undo', //撤销
+	                       'redo', //重做
+	                       'bold', //加粗
+	                       'indent', //首行缩进
+	                       'snapscreen', //截图
+	                       'italic', //斜体
+	                       'underline', //下划线
+	                       'strikethrough', //删除线
+	                       'subscript', //下标
+	                       'fontborder', //字符边框
+	                       'superscript', //上标
+	                       'formatmatch', //格式刷
+	                       'source', //源代码
+	                       'blockquote', //引用
+	                       'pasteplain', //纯文本粘贴模式
+	                       'horizontal', //分隔线
+	                       'removeformat', //清除格式
+	                       'cleardoc', //清空文档
+	                       'insertcode', //代码语言
+	                       'fontfamily', //字体
+	                       'fontsize', //字号
+	                       'paragraph', //段落格式
+	                       'simpleupload', //单图上传
+	                       'insertimage', //多图上传
+	                       'link', //超链接
+	                       'emotion', //表情
+	                       'spechars', //特殊字符
+	                       'searchreplace', //查询替换
+	                       'justifyleft', //居左对齐
+	                       'justifyright', //居右对齐
+	                       'justifycenter', //居中对齐
+	                       'justifyjustify', //两端对齐
+	                       'forecolor', //字体颜色
+	                       'backcolor', //背景色
+	                       'insertorderedlist', //有序列表
+	                       'insertunorderedlist', //无序列表
+	                       'fullscreen', //全屏
+	                       'rowspacingtop', //段前距
+	                       'rowspacingbottom', //段后距
+	                       'pagebreak', //分页
+	                       'imageleft', //左浮动
+	                       'imageright', //右浮动
+	                       'imagecenter', //居中
+	                       'lineheight', //行间距
+	                       'autotypeset', //自动排版
+	                   ]
+	               ],
+		   	        autoHeightEnabled: false,
+		   	        autoFloatEnabled: true,
+		   	        initialFrameHeight:500,
+	    });
+	    
+	    
+	    
+	    UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+	    UE.Editor.prototype.getActionUrl = function(action) {  
+	        if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'listimage') {  
+	            return '/ueUploadController/upload?type=image';  
+	        }if(action == 'uploadvideo'){
+	        	return '/ueUploadController/upload?type=video';
+	        }if(action == 'uploadfile'){
+	        	return '/ueUploadController/upload?type=video';
+	        } else {  
+	            return this._bkGetActionUrl.call(this, action); 
+	        }  
+	    } 
+		
+	</script>
+</head>
+<body>
+	<br>
+	<form id="inputForm" action="/sys/notice/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<input type="hidden" name="id" th:value="${notice.id}" />
+			
+			<div class="form-group" id="roleSelect">
+				<label for="title" class="col-sm-1 control-label">标题<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="title" th:value="${notice.title}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<!-- <div class="form-group" id="roleSelect">
+				<label for="noticeType" class="col-sm-1 control-label">通知类型<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="noticeType" th:value="${notice.noticeType}" maxlength="255" class="form-control"/>
+				</div>
+			</div> -->
+			
+			<div class="form-group" id="roleSelect">
+				<label for="content" class="col-sm-1 control-label">内容<b class="error">*</b></label>
+   				<div class="col-sm-6">
+					<textarea rows="" cols="" th:text="${notice.content}" name="content" id="content"></textarea>
+						
+				</div>
+			</div>
+			
+			<!-- <div class="form-group" id="roleSelect">
+				<label for="author" class="col-sm-1 control-label">作者<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="author" th:value="${notice.author}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="publishTime" class="col-sm-1 control-label">发布时间<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="publishTime" th:value="${notice.publishTime}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="looks" class="col-sm-1 control-label">查看次数<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="looks" th:value="${notice.looks}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="noticeStatue" class="col-sm-1 control-label">通知状态</label>
+   				<div class="col-sm-6">
+			
+						 <input name="noticeStatue" th:value="${notice.noticeStatue}" maxlength="255" class="form-control"/>
+				</div>
+			</div> -->
+			<div class="form-group" id="roleSelect">
+				<label for="firstname" class="col-sm-1 control-label"></label>
+   				<div class="col-sm-6">
+					<button class="btn btn-success" type="submit">保 存</button>
+					<button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+				</div>
+			</div>
+	</form>
+</body>
+</html>

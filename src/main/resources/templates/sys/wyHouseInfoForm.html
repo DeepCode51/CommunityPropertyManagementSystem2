@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>房间信息管理</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#inputForm").validate({
+			rules : {
+				buildId: {
+					required : true
+				},
+				floorNo: {
+					required : true
+				},
+				houseNo: {
+					required : true
+				},
+			},
+			messages : {
+				buildId: {
+					required : "楼房编号必填"
+				},
+				floorNo: {
+					required : "楼层必填"
+				},
+				houseNo: {
+					required : "房号必填"
+				},
+			}
+		})
+		});
+	</script>
+</head>
+<body>
+	<br>
+	<form id="inputForm" action="/sys/wyHouseInfo/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<input type="hidden" name="id" th:value="${wyHouseInfo.id}" />
+			
+			<div class="form-group" id="roleSelect">
+				<label for="buildId" class="col-sm-1 control-label">楼房编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="buildId" th:value="${wyHouseInfo.buildId}" readonly="readonly" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="floorNo" class="col-sm-1 control-label">楼层<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="floorNo" th:value="${wyHouseInfo.floorNo}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="houseNo" class="col-sm-1 control-label">房号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="houseNo" th:value="${wyHouseInfo.houseNo}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="houseType" class="col-sm-1 control-label">房间类型</label>
+   				<div class="col-sm-6">
+					 <input name="houseType" th:value="${wyHouseInfo.houseType}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="finishType" class="col-sm-1 control-label">装修风格</label>
+   				<div class="col-sm-6">
+			
+						 <input name="finishType" th:value="${wyHouseInfo.finishType}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="houseStatue" class="col-sm-1 control-label">房间状态</label>
+   				<div class="col-sm-6">
+					<select class="form-control" name="houseStatue">
+						<option value="1" th:selected="${wyHouseInfo.houseStatue=='1'}">可入住</option>
+						<option value="0" th:selected="${wyHouseInfo.houseStatue=='0'}" >已入住</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group" id="roleSelect">
+				<label for="firstname" class="col-sm-1 control-label"></label>
+   				<div class="col-sm-6">
+					<button class="btn btn-success" type="submit">保 存</button>
+					<button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+				</div>
+			</div>
+	</form>
+</body>
+</html>

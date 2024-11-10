@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyEquipmentInfoDao">
+    
+	<sql id="wyEquipmentInfoColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.plot_id AS "plotId",
+		a.is_good AS "isGood",
+		a.add_time AS "addTime",
+		a.remark AS "remark",
+		b.plot_name AS "plotName"
+	</sql>
+	
+	<sql id="wyEquipmentInfoJoins">
+		left join wy_plot_info b on b.id = a.plot_id
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyEquipmentInfo">
+		SELECT 
+			<include refid="wyEquipmentInfoColumns"/>
+		FROM wy_equipment_info a
+		<include refid="wyEquipmentInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyEquipmentInfo">
+		SELECT 
+			<include refid="wyEquipmentInfoColumns"/>
+		FROM wy_equipment_info a
+		<include refid="wyEquipmentInfoJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.name LIKE  concat('%',#{name},'%')
+			</if>
+			<if test="plotId != null and plotId != ''">
+				AND a.plot_id = #{plotId}
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyEquipmentInfo">
+		SELECT 
+			<include refid="wyEquipmentInfoColumns"/>
+		FROM wy_equipment_info a
+		<include refid="wyEquipmentInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_equipment_info(
+			id,
+			name,
+			plot_id,
+			is_good,
+			add_time,
+			remark
+		) VALUES (
+			#{id},
+			#{name},
+			#{plotId},
+			#{isGood},
+			#{addTime},
+			#{remark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_equipment_info SET 	
+			name = #{name},
+			plot_id = #{plotId},
+			is_good = #{isGood},
+			add_time = #{addTime},
+			remark = #{remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_equipment_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyMoenyInfoDao">
+    
+	<sql id="wyMoenyInfoColumns">
+		a.id AS "id",
+		a.lead_id AS "leadId",
+		a.pay_type AS "payType",
+		a.pay_money AS "payMoney",
+		a.pay_content AS "payContent",
+		a.pay_time AS "payTime",
+		a.is_pay AS "isPay"
+	</sql>
+	
+	<sql id="wyMoenyInfoJoins">
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyMoenyInfo">
+		SELECT 
+			<include refid="wyMoenyInfoColumns"/>
+		FROM wy_moeny_info a
+		<include refid="wyMoenyInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyMoenyInfo">
+		SELECT 
+			<include refid="wyMoenyInfoColumns"/>
+		FROM wy_moeny_info a
+		<include refid="wyMoenyInfoJoins"/>
+		<where>
+			
+			<if test="leadId != null and leadId != ''">
+				AND a.lead_id = #{leadId}
+			</if>
+			<if test="payType != null and payType != ''">
+				AND a.pay_type = #{payType}
+			</if>
+			<if test="payContent != null and payContent != ''">
+				AND a.pay_content LIKE  concat('%',#{payContent},'%')
+			</if>
+			<if test="isPay != null and isPay != ''">
+				AND a.is_pay = #{isPay}
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyMoenyInfo">
+		SELECT 
+			<include refid="wyMoenyInfoColumns"/>
+		FROM wy_moeny_info a
+		<include refid="wyMoenyInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_moeny_info(
+			id,
+			lead_id,
+			pay_type,
+			pay_money,
+			pay_content,
+			pay_time,
+			is_pay
+		) VALUES (
+			#{id},
+			#{leadId},
+			#{payType},
+			#{payMoney},
+			#{payContent},
+			#{payTime},
+			#{isPay}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_moeny_info SET 	
+			lead_id = #{leadId},
+			pay_type = #{payType},
+			pay_money = #{payMoney},
+			pay_content = #{payContent},
+			pay_time = #{payTime},
+			is_pay = #{isPay}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_moeny_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

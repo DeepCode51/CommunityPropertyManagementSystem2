@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>住户报修信息列表</title>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript">
+        $(function() {
+        
+        })
+
+        function page(n){
+            $("#pageNo").val(n);
+            $("#searchForm").submit();
+            return false;
+        }
+    </script>
+</head>
+<body>
+<div class="container-fluid"><br>
+	<form id="searchForm" action="/sys/wyHouseFixInfo/" method="post" class="form-horizontal">
+		<input id="pageNo" name="pageNo" type="hidden" th:value="${pageInfo.pageNum}"/>
+		<div class="form-group">
+			<label for="firstname" class="col-sm-1 control-label">小区编号：</label>
+				<div class="col-sm-2">
+   					<input name="plotId" class="form-control input-sm" placeholder="小区编号" th:value="${wyHouseFixInfo.plotId}"/>
+   				</div>
+			<label for="firstname" class="col-sm-1 control-label">楼房编号：</label>
+				<div class="col-sm-2">
+   					<input name="buildId" class="form-control input-sm" placeholder="楼房编号" th:value="${wyHouseFixInfo.buildId}"/>
+   				</div>
+			<label for="firstname" class="col-sm-1 control-label">房号：</label>
+				<div class="col-sm-2">
+   					<input name="houseId" class="form-control input-sm" placeholder="房号" th:value="${wyHouseFixInfo.houseId}"/>
+   				</div>
+			<label for="firstname" class="col-sm-1 control-label">报修人：</label>
+				<div class="col-sm-2">
+   					<input name="leader" class="form-control input-sm" placeholder="报修人" th:value="${wyHouseFixInfo.leader}"/>
+   				</div>
+			<label for="firstname" class="col-sm-1 control-label">报修说明：</label>
+				<div class="col-sm-2">
+   					<input name="content" class="form-control input-sm" placeholder="报修说明" th:value="${wyHouseFixInfo.content}"/>
+   				</div>
+			<label for="firstname" class="col-sm-1 control-label">是否处理：</label>
+				<div class="col-sm-2">
+   					 <select class="form-control" name="isFix">
+   					 <option value="">-未选择-</option>
+						<option value="1" th:selected="${wyHouseFixInfo.isFix=='1'}">是</option>
+						<option value="0" th:selected="${wyHouseFixInfo.isFix=='0'}">否</option>
+					</select>
+   				</div>
+			<button class="btn btn-success btn-sm" type="submit">
+				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+				查询
+			</button>
+			<a th:href="@{/sys/wyHouseFixInfo/form}" class="btn btn-info btn-sm" target="mainFrame">新增</a>
+		</div>
+	</form>
+	<div class="alert alert-info alert-dismissible" role="alert" th:if="${msg!=null}">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>提示!</strong><span th:text="${msg}"></span>
+	</div>
+	<table id="contentTable" class="table table-striped table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>小区编号</th>
+				<th>楼房编号</th>
+				<th>房号</th>
+				<th>报修人</th>
+				<th>联系电话</th>
+				<th>报修说明</th>
+				<th>报修时间</th>
+				<th>是否处理</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="wyHouseFixInfo,index_no:${pageInfo.list}">
+				<td>[[${index_no.index+1+(pageInfo.pageNum-1)*pageInfo.pageSize }]]</td>
+				<td>
+[[${wyHouseFixInfo.plotId}]]
+</td>
+				<td>
+[[${wyHouseFixInfo.buildId}]]
+</td>
+				<td>
+[[${wyHouseFixInfo.houseId}]]
+</td>
+				<td>
+[[${wyHouseFixInfo.leader}]]
+</td>
+				<td>
+[[${wyHouseFixInfo.tel}]]
+</td>
+				<td>
+[[${wyHouseFixInfo.content}]]
+</td>
+				<td>
+[[${wyHouseFixInfo.reportTime}]]
+</td>
+				<td>
+[[${wyHouseFixInfo.isFix=="1"?"是":"否"}]]
+</td>
+				<td>
+    				<a  th:href="@{/sys/wyHouseFixInfo/form?id=}+${wyHouseFixInfo.id}" href="#">
+    					<button class="btn btn-primary btn-xs" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+							编辑
+						</button>
+    				</a>
+					<a th:href="@{/sys/wyHouseFixInfo/delete?id=}+${wyHouseFixInfo.id}" href="#" onclick="return confirm('确认要删除吗？', this.href)">
+						<button class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+							删除
+						</button>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<!-- 分页条 -->
+	  <div class="row" th:include="model :: pageInfo"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyEquipmentFixInfoDao">
+    
+	<sql id="wyEquipmentFixInfoColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.fix_content AS "fixContent",
+		a.fix_user AS "fixUser",
+		a.fix_time AS "fixTime"
+	</sql>
+	
+	<sql id="wyEquipmentFixInfoJoins">
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyEquipmentFixInfo">
+		SELECT 
+			<include refid="wyEquipmentFixInfoColumns"/>
+		FROM wy_equipment_fix_info a
+		<include refid="wyEquipmentFixInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyEquipmentFixInfo">
+		SELECT 
+			<include refid="wyEquipmentFixInfoColumns"/>
+		FROM wy_equipment_fix_info a
+		<include refid="wyEquipmentFixInfoJoins"/>
+		<where>
+			
+			<if test="name != null and name != ''">
+				AND a.name LIKE  concat('%',#{name},'%')
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyEquipmentFixInfo">
+		SELECT 
+			<include refid="wyEquipmentFixInfoColumns"/>
+		FROM wy_equipment_fix_info a
+		<include refid="wyEquipmentFixInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_equipment_fix_info(
+			id,
+			name,
+			fix_content,
+			fix_user,
+			fix_time
+		) VALUES (
+			#{id},
+			#{name},
+			#{fixContent},
+			#{fixUser},
+			#{fixTime}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_equipment_fix_info SET 	
+			name = #{name},
+			fix_content = #{fixContent},
+			fix_user = #{fixUser},
+			fix_time = #{fixTime}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_equipment_fix_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

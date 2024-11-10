@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyHouseInfoDao">
+    
+	<sql id="wyHouseInfoColumns">
+		a.id AS "id",
+		a.build_id AS "buildId",
+		a.floor_no AS "floorNo",
+		a.house_no AS "houseNo",
+		a.house_type AS "houseType",
+		a.finish_type AS "finishType",
+		a.house_statue AS "houseStatue",
+		b.plot_name AS "plotName",
+		c.build_name AS "builName"
+	</sql>
+	
+	<sql id="wyHouseInfoJoins">
+		left join wy_building_info c on c.id = a.build_id
+		left join wy_plot_info b on b.id = c.plot_id
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyHouseInfo">
+		SELECT 
+			<include refid="wyHouseInfoColumns"/>
+		FROM wy_house_info a
+		<include refid="wyHouseInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyHouseInfo">
+		SELECT 
+			<include refid="wyHouseInfoColumns"/>
+		FROM wy_house_info a
+		<include refid="wyHouseInfoJoins"/>
+		<where>
+			<if test="plotId != null and plotId != ''">
+				AND c.plot_id = #{plotId}
+			</if>
+			<if test="buildId != null and buildId != ''">
+				AND a.build_id = #{buildId}
+			</if>
+			<if test="houseNo != null and houseNo != ''">
+				AND a.house_no = #{houseNo}
+			</if>
+			<if test="houseType != null and houseType != ''">
+				AND a.house_type = #{houseType}
+			</if>
+			<if test="finishType != null and finishType != ''">
+				AND a.finish_type = #{finishType}
+			</if>
+			<if test="houseStatue != null and houseStatue != ''">
+				AND a.house_statue = #{houseStatue}
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyHouseInfo">
+		SELECT 
+			<include refid="wyHouseInfoColumns"/>
+		FROM wy_house_info a
+		<include refid="wyHouseInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_house_info(
+			id,
+			build_id,
+			floor_no,
+			house_no,
+			house_type,
+			finish_type,
+			house_statue
+		) VALUES (
+			#{id},
+			#{buildId},
+			#{floorNo},
+			#{houseNo},
+			#{houseType},
+			#{finishType},
+			#{houseStatue}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_house_info SET 	
+			build_id = #{buildId},
+			floor_no = #{floorNo},
+			house_no = #{houseNo},
+			house_type = #{houseType},
+			finish_type = #{finishType},
+			house_statue = #{houseStatue}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_house_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

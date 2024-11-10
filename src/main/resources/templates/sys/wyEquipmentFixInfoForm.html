@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>设备维修信息管理</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+          <script src="/My97DatePicker/WdatePicker.js" type="text/javascript" th:src="@{/My97DatePicker/WdatePicker.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#inputForm").validate({
+			rules : {
+				name: {
+					required : true
+				},
+				fixContent: {
+					required : true
+				},
+				fixUser: {
+					required : true
+				},
+				fixTime: {
+					required : true
+				},
+			},
+			messages : {
+				name: {
+					required : "设备名称必填"
+				},
+				fixContent: {
+					required : "维修内容必填"
+				},
+				fixUser: {
+					required : "维修人必填"
+				},
+				fixTime: {
+					required : "维修时间必填"
+				},
+			}
+		})
+		});
+	</script>
+</head>
+<body>
+	<br>
+	<form id="inputForm" action="/sys/wyEquipmentFixInfo/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<input type="hidden" name="id" th:value="${wyEquipmentFixInfo.id}" />
+			
+			<div class="form-group" id="roleSelect">
+				<label for="name" class="col-sm-1 control-label">设备名称<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="name" th:value="${wyEquipmentFixInfo.name}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="fixContent" class="col-sm-1 control-label">维修内容<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="fixContent" th:value="${wyEquipmentFixInfo.fixContent}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="fixUser" class="col-sm-1 control-label">维修人<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="fixUser" th:value="${wyEquipmentFixInfo.fixUser}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="fixTime" class="col-sm-1 control-label">维修时间<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="fixTime" th:value="${wyEquipmentFixInfo.fixTime}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});" readonly="readonly"  class="form-control"/>
+				</div>
+			</div>
+			<div class="form-group" id="roleSelect">
+				<label for="firstname" class="col-sm-1 control-label"></label>
+   				<div class="col-sm-6">
+					<button class="btn btn-success" type="submit">保 存</button>
+					<button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+				</div>
+			</div>
+	</form>
+</body>
+</html>

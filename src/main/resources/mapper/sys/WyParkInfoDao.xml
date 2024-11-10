@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyParkInfoDao">
+    
+	<sql id="wyParkInfoColumns">
+		a.id AS "id",
+		a.plot_id AS "plotId",
+		a.park_no AS "parkNo",
+		a.park_type AS "parkType",
+		a.car_no AS "carNo",
+		a.drivers AS "drivers",
+		a.tel AS "tel",
+		a.park_statue AS "parkStatue",
+		b.plot_name AS "plotName"
+	</sql>
+	
+	<sql id="wyParkInfoJoins">
+		left join wy_plot_info b on b.id = a.plot_id
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyParkInfo">
+		SELECT 
+			<include refid="wyParkInfoColumns"/>
+		FROM wy_park_info a
+		<include refid="wyParkInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyParkInfo">
+		SELECT 
+			<include refid="wyParkInfoColumns"/>
+		FROM wy_park_info a
+		<include refid="wyParkInfoJoins"/>
+		<where>
+			
+			<if test="plotId != null and plotId != ''">
+				AND a.plot_id = #{plotId}
+			</if>
+			<if test="parkNo != null and parkNo != ''">
+				AND a.park_no LIKE  concat('%',#{parkNo},'%')
+			</if>
+			<if test="parkType != null and parkType != ''">
+				AND a.park_type = #{parkType}
+			</if>
+			<if test="carNo != null and carNo != ''">
+				AND a.car_no = #{carNo}
+			</if>
+			<if test="drivers != null and drivers != ''">
+				AND a.drivers LIKE  concat('%',#{drivers},'%')
+			</if>
+			<if test="parkStatue != null and parkStatue != ''">
+				AND a.park_statue = #{parkStatue}
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyParkInfo">
+		SELECT 
+			<include refid="wyParkInfoColumns"/>
+		FROM wy_park_info a
+		<include refid="wyParkInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_park_info(
+			id,
+			plot_id,
+			park_no,
+			park_type,
+			car_no,
+			drivers,
+			tel,
+			park_statue
+		) VALUES (
+			#{id},
+			#{plotId},
+			#{parkNo},
+			#{parkType},
+			#{carNo},
+			#{drivers},
+			#{tel},
+			#{parkStatue}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_park_info SET 	
+			plot_id = #{plotId},
+			park_no = #{parkNo},
+			park_type = #{parkType},
+			car_no = #{carNo},
+			drivers = #{drivers},
+			tel = #{tel},
+			park_statue = #{parkStatue}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_park_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

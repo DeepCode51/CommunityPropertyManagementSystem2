@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html   xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>AlphaAdmin</title>
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script type="text/javascript">
+        $(function() {})
+    </script>
+</head>
+
+<body>
+<div class="container-fluid">
+
+    <div class="row" th:fragment="pageInfo">
+        <!--分页文字信息  -->
+        <div class="col-md-6">当前 <span th:text="${pageInfo.pageNum }"></span>页,总<span th:text="${pageInfo.pages }"></span>
+            页,总<span th:text="${pageInfo.total }"></span>条记录</div>
+        <!-- 分页条信息 -->
+        <div class="col-md-6">
+           <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li><a href="javascript:void(0);" th:onclick="'javascript:page(\'1\');'">首页</a></li>
+                    <li th:if="${pageInfo.hasPreviousPage }"><a href="javascript:void(0);" th:onclick="'javascript:page(\''+${pageInfo.pageNum - 1}+'\');'"
+                           aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+                    </a></li>
+                    <li th:class="${page_Num == pageInfo.pageNum }?'active':''" th:each="page_Num:${pageInfo.navigatepageNums}"><a href="javascript:void(0);" th:onclick="'javascript:page(\''+${page_Num}+'\');'">[[${page_Num }]]</a></li>
+                        <li th:if="${pageInfo.hasNextPage }"><a href="javascript:void(0);" th:onclick="'javascript:page(\''+${pageInfo.pageNum+1}+'\');'"
+                               aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+                        </a></li>
+                    <li><a href="javascript:void(0);" th:onclick="'javascript:page(\''+${pageInfo.pages }+'\');'">末页</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>

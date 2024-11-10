@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>楼房信息管理</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script src="/My97DatePicker/WdatePicker.js" type="text/javascript" th:src="@{/My97DatePicker/WdatePicker.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#inputForm").validate({
+			rules : {
+				plotId: {
+					required : true
+				},
+				buildName: {
+					required : true
+				},
+				buildArea: {
+					required : true
+				},
+				buildLocation: {
+					required : true
+				},
+				buildStatue: {
+					required : true
+				},
+				buildTime: {
+					required : true
+				},
+			},
+			messages : {
+				plotId: {
+					required : "小区编号必填"
+				},
+				buildName: {
+					required : "楼房名称必填"
+				},
+				buildArea: {
+					required : "楼房面积必填"
+				},
+				buildLocation: {
+					required : "楼房方位必填"
+				},
+				buildStatue: {
+					required : "楼房状态必填"
+				},
+				buildTime: {
+					required : "建筑日期必填"
+				},
+			}
+		})
+		});
+	</script>
+</head>
+<body>
+	<br>
+	<form id="inputForm" action="/sys/wyBuildingInfo/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<input type="hidden" name="id" th:value="${wyBuildingInfo.id}" />
+			
+			<div class="form-group" id="roleSelect">
+				<label for="plotId" class="col-sm-1 control-label">小区编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+					<select name="plotId"  class="form-control">
+						<option value="">-未选择-</option>
+						<option th:each="wyPlotInfo:${wyPlotInfos}" th:value="${wyPlotInfo.id}" th:selected="${wyPlotInfo.id==wyBuildingInfo.plotId}" >[[${wyPlotInfo.plotName}]]</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="buildName" class="col-sm-1 control-label">楼房名称<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="buildName" th:value="${wyBuildingInfo.buildName}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="buildArea" class="col-sm-1 control-label">楼房面积<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="buildArea" th:value="${wyBuildingInfo.buildArea}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="buildLocation" class="col-sm-1 control-label">楼房方位<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="buildLocation" th:value="${wyBuildingInfo.buildLocation}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="buildStatue" class="col-sm-1 control-label">楼房状态<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="buildStatue" th:value="${wyBuildingInfo.buildStatue}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="buildTime" class="col-sm-1 control-label">建筑日期<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="buildTime" th:value="${wyBuildingInfo.buildTime}" 
+						 onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});" readonly="readonly" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="remark" class="col-sm-1 control-label">备注</label>
+   				<div class="col-sm-6">
+			
+						 <input name="remark" th:value="${wyBuildingInfo.remark}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			<div class="form-group" id="roleSelect">
+				<label for="firstname" class="col-sm-1 control-label"></label>
+   				<div class="col-sm-6">
+					<button class="btn btn-success" type="submit">保 存</button>
+					<button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+				</div>
+			</div>
+	</form>
+</body>
+</html>

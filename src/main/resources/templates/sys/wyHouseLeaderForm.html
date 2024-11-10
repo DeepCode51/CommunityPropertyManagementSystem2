@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>户主信息管理</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script src="/My97DatePicker/WdatePicker.js" type="text/javascript" th:src="@{/My97DatePicker/WdatePicker.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+	<script type="text/javascript"  th:inline="javascript">
+		$(document).ready(function() {
+			$("#inputForm").validate({
+			rules : {
+				houseId: {
+					required : true
+				},
+				peopleName: {
+					required : true
+				},
+				sex: {
+					required : true
+				},
+				tel: {
+					required : true
+				},
+				inTime: {
+					required : true
+				},
+				inPeoples: {
+					required : true
+				},
+			},
+			messages : {
+				houseId: {
+					required : "房间编号必填"
+				},
+				peopleName: {
+					required : "户主名称必填"
+				},
+				sex: {
+					required : "性别必填"
+				},
+				tel: {
+					required : "联系电话必填"
+				},
+				inTime: {
+					required : "入住时间必填"
+				},
+				inPeoples: {
+					required : "入住人数必填"
+				},
+			}
+		})
+		
+			/* var plotId = $("#plotId").val();
+			if(plotId!=null && plotId!=""){
+				getBuilds(plotId);
+			}
+			
+			var builId = $("#builId").val();
+			if(builId!=null && builId!=""){
+				getHouses(builId);
+			} */
+			
+		});
+		
+		function getBuilds(plotId){
+			$.ajax({
+				type : 'post',
+				async : false,
+				url :"/sys/wyBuildingInfo/getByPlotId?plotId="+plotId,
+				contentType : "application/json",
+				success : function(data) {
+					$("#builId").empty();
+					$("#houseId").empty();
+					$("#builId").append('<option value="">-未选择-</option>');
+					$.each(data,function(index,obj){
+					     $("#builId").append('<option value="'+obj.id+'" th:selected="${obj.id==wyHouseLeader.builId}" >'+obj.buildName+'</option>');
+					});
+				}
+			});
+		}
+		
+		function getHouses(buildId){
+			$.ajax({
+				type : 'post',
+				async : false,
+				url :"/sys/wyHouseInfo/getByBuildId?buildId="+buildId,
+				contentType : "application/json",
+				success : function(data) {
+					$("#houseId").empty();
+					$("#houseId").append('<option value="">-未选择-</option>');
+					$.each(data,function(index,obj){
+					     $("#houseId").append('<option value="'+obj.id+'" th:selected="${obj.id==wyHouseLeader.houseId}" >'+obj.houseNo+'</option>');
+					});
+				}
+			});
+		}
+		
+	</script>
+</head>
+<body>
+	<br>
+	<form id="inputForm" action="/sys/wyHouseLeader/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<input type="hidden" name="id" th:value="${wyHouseLeader.id}" />
+		
+			<div class="form-group" id="roleSelect" th:if="${wyHouseLeader.id==null}">
+				<label for="plotId" class="col-sm-1 control-label">小区编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+					 <select name="plotId" id="plotId" class="form-control" onchange="getBuilds(this.value)">
+						<option value="">-未选择-</option>
+						<option th:each="wyPlotInfo:${wyPlotInfos}" th:value="${wyPlotInfo.id}" th:selected="${wyPlotInfo.id==wyHouseLeader.plotId}" >[[${wyPlotInfo.plotName}]]</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect" th:if="${wyHouseLeader.id==null}">
+				<label for="plotId" class="col-sm-1 control-label">楼房编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+					 <select name="builId" id="builId"  class="form-control" onchange="getHouses(this.value)">
+					 	<option value="">-未选择-</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect" th:if="${wyHouseLeader.id==null}">
+				<label for="houseId" class="col-sm-1 control-label">房间编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						  <select name="houseId" id="houseId"  class="form-control">
+						<option value="">-未选择-</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect" th:if="${wyHouseLeader.id!=null}">
+				<label for="houseId" class="col-sm-1 control-label">房间地址</label>
+   				<div class="col-sm-6">
+   					 <p class="form-control-static">[[${wyHouseLeader.plotName}]]-[[${wyHouseLeader.builName}]]-[[${wyHouseLeader.houseName}]]</p>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="peopleName" class="col-sm-1 control-label">户主名称<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="peopleName" th:value="${wyHouseLeader.peopleName}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="sex" class="col-sm-1 control-label">性别<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <select class="form-control" name="sex">
+						<option value="">-未选择-</option>
+						<option value="0" th:selected="${wyHouseLeader.sex=='0'}"  >女</option>
+						<option value="1"  th:selected="${wyHouseLeader.sex=='1'}" >男</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="tel" class="col-sm-1 control-label">联系电话<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="tel" th:value="${wyHouseLeader.tel}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="inTime" class="col-sm-1 control-label">入住时间<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="inTime" th:value="${wyHouseLeader.inTime}"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});" readonly="readonly" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="inPeoples" class="col-sm-1 control-label">入住人数<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="inPeoples" th:value="${wyHouseLeader.inPeoples}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="isOut" class="col-sm-1 control-label">是否搬出</label>
+   				<div class="col-sm-6">
+					<select class="form-control" name="isOut">
+						<option value="">-未选择-</option>
+						<option value="0" th:selected="${wyHouseLeader.isOut=='0'}"  >否</option>
+						<option value="1"  th:selected="${wyHouseLeader.isOut=='1'}" >是</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="outTime" class="col-sm-1 control-label">搬出时间</label>
+   				<div class="col-sm-6">
+			
+						 <input name="outTime" th:value="${wyHouseLeader.outTime}"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});" readonly="readonly" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="remark" class="col-sm-1 control-label">备注</label>
+   				<div class="col-sm-6">
+			
+						 <input name="remark" th:value="${wyHouseLeader.remark}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			<div class="form-group" id="roleSelect">
+				<label for="firstname" class="col-sm-1 control-label"></label>
+   				<div class="col-sm-6">
+					<button class="btn btn-success" type="submit">保 存</button>
+					<button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+				</div>
+			</div>
+	</form>
+</body>
+</html>

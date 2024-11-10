@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>小区物业管理系统注册</title>
+   <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css" th:href="@{/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="assets/libs/icheck/skins/all.css" th:href="@{/assets/libs/icheck/skins/all.css}">
+    <link rel="stylesheet" type="text/css" href="assets/css/iconfont.css" th:href="@{/assets/css/iconfont.css}">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" th:href="@{/assets/css/style.css}">
+    <style type="text/css">
+    	.error{
+    		color:red;
+    	}
+    </style>
+</head>
+
+<body class="register-page">
+	<div class="login-bg">
+		
+	</div>
+    <div class="register-wrapper">
+        <div class="header skew">
+        </div>
+        <div class="register-logo">
+            <a href="#">
+				<strong>小区物业管理系统注册</strong>
+			</a>
+        </div>
+        <div class="register-body">
+            <p class="text-primary text-center">注册一个新的账号</p>
+            <form action="/sys/user/regit" id="submitForm" method="post">
+            <div class="form">
+                <div class="form-group">
+                    <div class="input-group">
+                    	<span class="input-group-addon">
+                    		<i class="iconfont icon-login-user"></i>
+                    	</span>
+                    	<input type="text" id="username" name="username" class="form-control" placeholder="输入用户名">
+                    </div>
+                </div>
+                <div class="form-group">
+                	<div class="input-group">
+                		<span class="input-group-addon">
+                			<i class="iconfont icon-lock"></i>
+                		</span>
+                		<input type="password" id="password" name="password" class="form-control" placeholder="输入密码">
+                	</div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="iconfont icon-input"></i>
+                        </span>
+                        <input type="password" id="password_again" name="password_again" class="form-control" placeholder="再输入一次密码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                    	<span class="input-group-addon">
+                    		<i class="iconfont icon-login-user"></i>
+                    	</span>
+                    	<input type="text" id="tel" name="tel" class="form-control" placeholder="请输入电话">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                    	<span class="input-group-addon">
+                    		<i class="iconfont icon-login-user"></i>
+                    	</span>
+                    	<input type="text" id="email" name="email" class="form-control" placeholder="输入邮箱">
+                    </div>
+                </div>
+                <div class="form-group">
+                	<div class="row">
+                        <div class="col-xs-6">
+                        	<span class="pull-right" style="color: red" th:text="${msg}"></span>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="input-group pull-right">
+                                <button type="submit" class="btn btn-primary">创建账号</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<p class="text-center">
+					已有账号,<a href="/login">前往登录</a>
+				</p>
+            </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="/assets/js/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+    <!-- icheck.js -->
+    <script type="text/javascript" src="/assets/libs/icheck/icheck.min.js"></script>
+    <script type="text/javascript" src="/assets/js/alpha.js"></script>
+     <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+	
+   <script type="text/javascript">
+	$().ready(function() {
+		// 在键盘按下并释放及提交后验证提交表单
+		$("#submitForm").validate({
+			rules : {
+				username : {
+					required : true,
+					minlength :4,
+					/* remote: {
+					    url: "${adminPath}/user?method=checkUserName",     //后台处理程序
+					    type: "post",               //数据发送方式
+					    dataType: "json",           //接受数据格式   
+					    data: {                     //要传递的数据
+					        username: function() {
+					            return $("#username").val();
+					        }
+					    }
+					} */
+				},
+				tel : {
+					required : true,
+					minlength : 11
+				},
+				email : {
+					required : true,
+					email : true
+				},
+				password : {
+					required : true,
+					minlength : 5
+				},
+				password_again : {
+					required : true,
+					minlength : 5,
+					equalTo : "#password"
+				}
+			},
+			messages : {
+				username : {
+					required : "请输入用户名",
+					minlength : "用户名必须4位以上",
+					/* remote : "用户名已存在，请重新输入" */
+				},
+				tel : {
+					required : "电话必填",
+					minlength : "至少11位"
+				},
+				email : {
+					required : "邮箱必填",
+					email : "邮箱格式不正确"
+				},
+				password : {
+					required : "请输入密码",
+					minlength : "密码长度不能小于 5 个字母"
+				},
+				password_again : {
+					required : "请输入确认密码",
+					minlength : "密码长度不能小于 5 个字母",
+					equalTo : "两次密码输入不一致"
+				}
+			}
+		})
+	});
+</script>
+</body>
+
+</html>

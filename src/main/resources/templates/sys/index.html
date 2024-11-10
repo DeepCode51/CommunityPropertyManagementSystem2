@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>小区物业管理系统</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-table.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/iconfont.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+</head>
+<body>
+	<div class="skin-default" id="wrapper">
+		<header class="navbar-header" th:fragment="top">
+			<div class="brand">
+				<a class="navbar-brand" href="/index" title="AlphaAdmin">小区物业管理系统</a>
+			</div>
+			<div class="navbar">
+				<i class="sidebar-toggle iconfont icon-menu" data-toggle="push-menu" role="button">
+				</i>
+				<div class="navbar-menu pull-right">
+					<ul class="nav navbar-nav">
+						<!--<li class="dropdown message">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="消息">
+								<i class="iconfont icon-email"></i>
+								<span class="badge">4</span>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="header">
+									您有4条消息
+								</li>
+								<li class="body">
+									<ul class="menu">
+										<li>
+											<a href="#" title="如何设置头部head...">
+												<div class="pull-left">
+													<img class="img-circle" src="assets/avatars/avatars.png">
+												</div>
+												<h4 class="name">
+													匿名用户
+													<small class="pull-right">
+														<i class="iconfont icon-time"></i>
+														5分钟前
+													</small>
+												</h4>
+												<p class="content">
+													如何设置头部head的meta值
+												</p>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="如何设置头部head...">
+												<div class="pull-left">
+													<img class="img-circle" src="assets/avatars/avatars.png">
+												</div>
+												<h4 class="name">
+													匿名用户
+													<small class="pull-right">
+														<i class="iconfont icon-time"></i>
+														5分钟前
+													</small>
+												</h4>
+												<p class="content">
+													如何设置头部head的meta值
+												</p>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="如何设置头部head...">
+												<div class="pull-left">
+													<img class="img-circle" src="assets/avatars/avatars.png">
+												</div>
+												<h4 class="name">
+													匿名用户
+													<small class="pull-right">
+														<i class="iconfont icon-time"></i>
+														5分钟前
+													</small>
+												</h4>
+												<p class="content">
+													如何设置头部head的meta值
+												</p>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="如何设置头部head...">
+												<div class="pull-left">
+													<img class="img-circle" src="assets/avatars/avatars.png">
+												</div>
+												<h4 class="name">
+													匿名用户
+													<small class="pull-right">
+														<i class="iconfont icon-time"></i>
+														5分钟前
+													</small>
+												</h4>
+												<p class="content">
+													如何设置头部head的meta值
+												</p>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="footer">
+									<a href="#" title="查看所有消息">
+										查看所有消息
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="dropdown notify">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="通知">
+								<i class="iconfont icon-bells"></i>
+								<span class="badge">7</span>
+							</a>
+							<ul class="dropdown-menu">
+								<li class="header">
+									您有7个通知
+								</li>
+								<li class="body">
+									<ul class="menu">
+										<li>
+											<a class="text-danger" href="#" title="系统发生一个未知错误">
+												<i class="iconfont icon-error pull-left"></i>
+												<p class="content">发生一个系统路径错误</p>
+											</a>
+										</li>
+										<li>
+											<a class="text-warning" href="#" title="系统发出一个警告">
+												<i class="iconfont icon-alert pull-left"></i>
+												<p class="content">为安全起见,请删除install文件夹</p>
+											</a>
+										</li>
+										<li>
+											<a class="text-success" href="#" title="修改成功">
+												<i class="iconfont icon-ok pull-left"></i>
+												<p class="content">您更新了个人资料</p>
+											</a>
+										</li>
+										<li>
+											<a class="text-info" href="#" title="新成员">
+												<i class="iconfont icon-menu-user pull-left"></i>
+												<p class="content">3位新成员</p>
+											</a>
+										</li>
+										<li>
+											<a class="text-muted" href="#" title="点赞">
+												<i class="iconfont icon-thumbs-up pull-left"></i>
+												<p class="content">5个点赞</p>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li class="footer">
+									<a href="#" title="查看所有通知">
+										查看所有通知
+									</a>
+								</li>
+							</ul>
+						</li>
+						--><li class="dropdown user">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#" title="用户"  th:text="${session.login.username}">AlphaAdmin</a>
+							<ul class="dropdown-menu">
+								<!--<li>
+									<a data-toggle="modal" data-target=".menu-setpassword" href="#" title="个人信息">
+										<i class="iconfont icon-menu-user"></i>
+										修改密码
+									</a>
+								</li>
+								<li>
+									<a href="#" title="系统设置">
+										<i class="iconfont icon-setting"></i>
+										系统设置
+									</a>
+								</li>
+								<li class="divider"></li>-->
+								<li>
+									<a href="/sys/user/logout" title="登出">
+										<i class="iconfont icon-power"></i>
+										登出
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</header>
+		<!-- 左侧导航 -->
+		<aside class="main-sidebar"  th:fragment="left">
+			<div class="user-panel">
+				<div class="image pull-left">
+					<img src="assets/avatars/avatars.png" th:src="@{/assets/avatars/timg.jpg}" alt="">
+				</div>
+				<div class="info pull-right">
+					<p class="title"  th:text="${session.login.username}">Alpha</p>
+					<strong th:if="${session.login.role=='1'}">管理员</strong>
+					<strong th:if="${session.login.role=='2'}">工作人员</strong>
+				</div>
+			</div>
+			<section class="sidebar">
+				<ul class="sidebar-menu" data-widget="tree">
+					<!--<li class="active">
+						<a href="index.html" title="仪表盘">
+							<i class="iconfont icon-dashborad"></i>
+							<small>仪表盘</small>
+						</a>
+					</li>-->
+					<li class="treeview"  th:if="${session.login.role=='1'}">
+						<a href="#" title="系统管理">
+							<i class="iconfont icon-chart"></i>
+							<small>系统管理</small>
+							<span class=" pull-right">
+								<i class="iconfont icon-menu-left-small"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="/sys/user/list" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>用户列表</small>
+								</a>
+							</li>
+							<li>
+								<a href="/sys/notice/list" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>通知列表</small>
+								</a>
+							</li>
+							
+						</ul>
+					</li>
+					
+					<li class="treeview" th:if="${session.login.role=='1'}">
+						<a href="#" title="信息管理">
+							<i class="iconfont icon-chart"></i>
+							<small>信息管理</small>
+							<span class=" pull-right">
+								<i class="iconfont icon-menu-left-small"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="/sys/wyPlotInfo" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>小区管理</small>
+								</a>
+								<a href="/sys/wyBuildingInfo" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>楼房信息</small>
+								</a>
+								<a href="/sys/wyParkInfo" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>车位管理</small>
+								</a>
+								<a href="/sys/wyEquipmentInfo" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>设备管理</small>
+								</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li class="treeview" ><!-- th:if="${session.login.role=='2'}" -->
+						<a href="#" title="人员信息管理">
+							<i class="iconfont icon-chart"></i>
+							<small>人员信息管理</small>
+							<span class=" pull-right">
+								<i class="iconfont icon-menu-left-small"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="/sys/wyHouseLeader" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>户主信息</small>
+								</a>
+								<a href="/sys/user/list" target="mainFrame"  th:if="${session.login.role=='1'}">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>工作人员信息</small>
+								</a>
+							</li>
+						</ul>
+					</li>
+					
+					
+					<li class="treeview" ><!-- th:if="${session.login.role=='2'}" -->
+						<a href="#" title="物业管理">
+							<i class="iconfont icon-chart"></i>
+							<small>物业管理</small>
+							<span class=" pull-right">
+								<i class="iconfont icon-menu-left-small"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="/sys/wyComplainInfo" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>投诉管理</small>
+								</a>
+								<a href="/sys/wyHouseFixInfo" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>住户报修</small>
+								</a>
+								<a href="/sys/wyEquipmentFixInfo" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>设备维修</small>
+								</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li class="treeview" ><!-- th:if="${session.login.role=='2'}" -->
+						<a href="#" title="费用管理">
+							<i class="iconfont icon-chart"></i>
+							<small>费用管理</small>
+							<span class=" pull-right">
+								<i class="iconfont icon-menu-left-small"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu">
+							<li>
+								<a href="/sys/wyHouseLeader/moneyInfo" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>费用添加</small>
+								</a>
+								<a href="/sys/wyMoenyInfo/list" target="mainFrame">
+									<i class="iconfont icon-circle-hollow"></i>
+									<small>费用查询</small>
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+		</aside>
+		<div class="page-wrapper">
+			<div class="page-header">
+				<h1 class="title">
+					当前位置
+					<small id="a_leader_txt">首页</small>
+				</h1>
+				<!--<ol class="breadcrumb">
+					<li>
+						<a href="#" title="家">
+							<i class="iconfont icon-home"></i>
+							<small>家</small>
+						</a>
+					</li>
+					<li class="active">
+						<small>
+							仪表盘
+						</small>
+					</li>
+				</ol>-->
+			</div>
+			<iframe id="mainFrame" name="mainFrame" src="" th:if="${session.login.role=='2'}" th:src="@{/sys/notice/list}" style="overflow:visible;" scrolling="yes" frameborder="no" width="100%" height="1050"></iframe>
+			<iframe id="mainFrame" name="mainFrame" src="" th:if="${session.login.role=='1'}" th:src="@{/sys/user/list}" style="overflow:visible;" scrolling="yes" frameborder="no" width="100%" height="1050"></iframe>
+		</div>
+		<!-- 修改密码模态框 -->
+		<div class="modal fade menu-setpassword" tabindex="-1" role="dialog" th:fragment="fixpass_model">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">修改密码</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table">
+							<tbody>
+								<tr>
+									<th>
+										旧密码
+									</th>
+									<td>
+										<input type="text" class="form-control" placeholder="请输入旧密码" name="js-oldPassword">
+									</td>
+								</tr>
+								<tr>
+									<th>
+										新密码
+									</th>
+									<td>
+										<input type="text" class="form-control" placeholder="请输入新密码" name="js-newPassword">
+									</td>
+								</tr>
+								<tr>
+									<th>
+										确认密码
+									</th>
+									<td>
+										<input type="text" class="form-control" placeholder="请再次输入新密码" name="js-verifyPassword">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                    <button type="button" class="btn btn-primary">保存</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 退出提示模态框 -->
+		<div class="modal fade menu-logout" tabindex="-1" role="dialog"  th:fragment="logout_model">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">提示</h4>
+					</div>
+					<div class="modal-body">
+						<p>是否确定退出</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                    <button type="button" class="btn btn-primary">登出</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="assets/js/jquery-2.1.0.min.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="assets/libs/tinymce/tinymce.min.js"></script>
+	<script type="text/javascript" src="assets/js/Chart.min.js"></script>
+	<script type="text/javascript" src="assets/js/echarts.min.js"></script>
+	<script type="text/javascript" src="assets/js/alpha.js"></script>
+	<script type="text/javascript" src="assets/js/dashboard.js"></script>
+	<script type="text/javascript">
+        $(function(){
+            $(".sidebar ul li a").click(function(){
+                $("#a_leader_txt").text($(this).text());
+                $(".a_leader_txt ul li a").removeClass("on");
+                $(this).addClass("on");
+            })
+        });
+	</script>
+</body>
+</html>

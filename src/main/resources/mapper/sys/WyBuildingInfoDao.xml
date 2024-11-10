@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyBuildingInfoDao">
+    
+	<sql id="wyBuildingInfoColumns">
+		a.id AS "id",
+		a.plot_id AS "plotId",
+		a.build_name AS "buildName",
+		a.build_area AS "buildArea",
+		a.build_location AS "buildLocation",
+		a.build_statue AS "buildStatue",
+		a.build_time AS "buildTime",
+		a.remark AS "remark",
+		b.plot_name AS "plotName"
+	</sql>
+	
+	<sql id="wyBuildingInfoJoins">
+		left join wy_plot_info b on b.id = a.plot_id
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyBuildingInfo">
+		SELECT 
+			<include refid="wyBuildingInfoColumns"/>
+		FROM wy_building_info a
+		<include refid="wyBuildingInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyBuildingInfo">
+		SELECT 
+			<include refid="wyBuildingInfoColumns"/>
+		FROM wy_building_info a
+		<include refid="wyBuildingInfoJoins"/>
+		<where>
+			
+			<if test="plotId != null and plotId != ''">
+				AND a.plot_id = #{plotId}
+			</if>
+			<if test="buildName != null and buildName != ''">
+				AND a.build_name LIKE  concat('%',#{buildName},'%')
+			</if>
+			<if test="buildStatue != null and buildStatue != ''">
+				AND a.build_statue = #{buildStatue}
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyBuildingInfo">
+		SELECT 
+			<include refid="wyBuildingInfoColumns"/>
+		FROM wy_building_info a
+		<include refid="wyBuildingInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_building_info(
+			id,
+			plot_id,
+			build_name,
+			build_area,
+			build_location,
+			build_statue,
+			build_time,
+			remark
+		) VALUES (
+			#{id},
+			#{plotId},
+			#{buildName},
+			#{buildArea},
+			#{buildLocation},
+			#{buildStatue},
+			#{buildTime},
+			#{remark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_building_info SET 	
+			plot_id = #{plotId},
+			build_name = #{buildName},
+			build_area = #{buildArea},
+			build_location = #{buildLocation},
+			build_statue = #{buildStatue},
+			build_time = #{buildTime},
+			remark = #{remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_building_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

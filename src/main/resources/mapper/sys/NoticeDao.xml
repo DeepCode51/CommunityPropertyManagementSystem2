@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.NoticeDao">
+    
+	<sql id="noticeColumns">
+		a.id AS "id",
+		a.title AS "title",
+		a.notice_type AS "noticeType",
+		a.content AS "content",
+		a.author AS "author",
+		a.publish_time AS "publishTime",
+		a.looks AS "looks",
+		a.notice_statue AS "noticeStatue"
+	</sql>
+	
+	<sql id="noticeJoins">
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.Notice">
+		SELECT 
+			<include refid="noticeColumns"/>
+		FROM sys_notice a
+		<include refid="noticeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.Notice">
+		SELECT 
+			<include refid="noticeColumns"/>
+		FROM sys_notice a
+		<include refid="noticeJoins"/>
+		<where>
+			
+			<if test="title != null and title != ''">
+				AND a.title LIKE  concat('%',#{title},'%')
+			</if>
+			<if test="noticeType != null and noticeType != ''">
+				AND a.notice_type = #{noticeType}
+			</if>
+			<if test="author != null and author != ''">
+				AND a.author = #{author}
+			</if>
+			<if test="noticeStatue != null and noticeStatue != ''">
+				AND a.notice_statue = #{noticeStatue}
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.Notice">
+		SELECT 
+			<include refid="noticeColumns"/>
+		FROM sys_notice a
+		<include refid="noticeJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_notice(
+			id,
+			title,
+			notice_type,
+			content,
+			author,
+			publish_time,
+			looks,
+			notice_statue
+		) VALUES (
+			#{id},
+			#{title},
+			#{noticeType},
+			#{content},
+			#{author},
+			#{publishTime},
+			#{looks},
+			#{noticeStatue}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_notice SET 	
+			title = #{title},
+			notice_type = #{noticeType},
+			content = #{content},
+			author = #{author},
+			publish_time = #{publishTime},
+			looks = #{looks},
+			notice_statue = #{noticeStatue}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM sys_notice
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>费用信息管理</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script src="/My97DatePicker/WdatePicker.js" type="text/javascript" th:src="@{/My97DatePicker/WdatePicker.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#inputForm").validate({
+			rules : {
+				isPay: {
+					required : true
+				},
+				payType: {
+					required : true
+				},
+				payMoney: {
+					required : true,
+					number:true
+				},
+				payTime: {
+					required : true
+				},
+			},
+			messages : {
+				isPay: {
+					required : "是否已交必填"
+				},
+				payType: {
+					required : "费用类型必填"
+				},
+				payMoney: {
+					required : "费用金额必填",
+					number:"必输输入合法的金额"
+				},
+				payTime: {
+					required : "费用时间必填"
+				},
+			}
+		})
+		});
+	</script>
+</head>
+<body>
+	<br>
+	<form id="inputForm" action="/sys/wyMoenyInfo/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<input type="hidden" name="id" th:value="${wyMoenyInfo.id}" />
+			
+			<div class="form-group" id="roleSelect">
+				<label for="leadId" class="col-sm-1 control-label">户主编号</label>
+   				<div class="col-sm-6">
+			
+						 <input name="leadId" th:value="${wyMoenyInfo.leadId}" readonly="readonly" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="payType" class="col-sm-1 control-label">费用类型</label>
+   				<div class="col-sm-6">
+			
+						 <select class="form-control" name="payType">
+						<option value="">-未选择-</option>
+						<option value="水费" th:selected="${wyMoenyInfo.payType=='水费'}"  >水费</option>
+						<option value="电费"  th:selected="${wyMoenyInfo.payType=='电费'}" >电费</option>
+						<option value="煤气费"  th:selected="${wyMoenyInfo.payType=='煤气费'}" >煤气费</option>
+						<option value="物业费"  th:selected="${wyMoenyInfo.payType=='物业费'}" >物业费</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="payMoney" class="col-sm-1 control-label">费用金额</label>
+   				<div class="col-sm-6">
+			
+						 <input name="payMoney" th:value="${wyMoenyInfo.payMoney}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="payContent" class="col-sm-1 control-label">消费说明</label>
+   				<div class="col-sm-6">
+			
+						 <input name="payContent" th:value="${wyMoenyInfo.payContent}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="payTime" class="col-sm-1 control-label">费用时间</label>
+   				<div class="col-sm-6">
+			
+						 <input name="payTime" th:value="${wyMoenyInfo.payTime}"  onclick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false});" readonly="readonly" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="isPay" class="col-sm-1 control-label">是否已交<b class="error">*</b></label>
+   				<div class="col-sm-6">
+					<select class="form-control" name="isPay">
+						<option value="">-未选择-</option>
+						<option value="0" th:selected="${wyMoenyInfo.isPay=='0'}"  >否</option>
+						<option value="1"  th:selected="${wyMoenyInfo.isPay=='1'}" >是</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group" id="roleSelect">
+				<label for="firstname" class="col-sm-1 control-label"></label>
+   				<div class="col-sm-6">
+					<button class="btn btn-success" type="submit">保 存</button>
+					<button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+				</div>
+			</div>
+	</form>
+</body>
+</html>

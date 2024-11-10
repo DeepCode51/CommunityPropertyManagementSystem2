@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyHouseLeaderDao">
+    
+	<sql id="wyHouseLeaderColumns">
+		a.id AS "id",
+		a.house_id AS "houseId",
+		a.people_name AS "peopleName",
+		a.sex AS "sex",
+		a.tel AS "tel",
+		a.in_time AS "inTime",
+		a.in_peoples AS "inPeoples",
+		a.is_out AS "isOut",
+		a.out_time AS "outTime",
+		a.remark AS "remark",
+		b.plot_name AS "plotName",
+		b.id AS "plotId",
+		c.build_name AS "builName",
+		c.id AS "builId",
+		h.house_no AS "houseName"
+		
+	</sql>
+	
+	<sql id="wyHouseLeaderJoins">
+		left join wy_house_info h on h.id = a.house_id
+		left join wy_building_info c on c.id = h.build_id
+		left join wy_plot_info b on b.id = c.plot_id
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyHouseLeader">
+		SELECT 
+			<include refid="wyHouseLeaderColumns"/>
+		FROM wy_house_leader a
+		<include refid="wyHouseLeaderJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyHouseLeader">
+		SELECT 
+			<include refid="wyHouseLeaderColumns"/>
+		FROM wy_house_leader a
+		<include refid="wyHouseLeaderJoins"/>
+		<where>
+			
+			<if test="id != null and id != ''">
+				AND a.id = #{id}
+			</if>
+			<if test="houseId != null and houseId != ''">
+				AND a.house_id = #{houseId}
+			</if>
+			<if test="peopleName != null and peopleName != ''">
+				AND a.people_name LIKE  concat('%',#{peopleName},'%')
+			</if>
+			<if test="isOut != null and isOut != ''">
+				AND a.is_out = #{isOut}
+			</if>
+			<if test="houseName != null and houseName != ''">
+				AND h.house_no LIKE  concat('%',#{houseName},'%')
+			</if>
+			
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyHouseLeader">
+		SELECT 
+			<include refid="wyHouseLeaderColumns"/>
+		FROM wy_house_leader a
+		<include refid="wyHouseLeaderJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_house_leader(
+			id,
+			house_id,
+			people_name,
+			sex,
+			tel,
+			in_time,
+			in_peoples,
+			is_out,
+			out_time,
+			remark
+		) VALUES (
+			#{id},
+			#{houseId},
+			#{peopleName},
+			#{sex},
+			#{tel},
+			#{inTime},
+			#{inPeoples},
+			#{isOut},
+			#{outTime},
+			#{remark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_house_leader SET 	
+			house_id = #{houseId},
+			people_name = #{peopleName},
+			sex = #{sex},
+			tel = #{tel},
+			in_time = #{inTime},
+			in_peoples = #{inPeoples},
+			is_out = #{isOut},
+			out_time = #{outTime},
+			remark = #{remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_house_leader
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

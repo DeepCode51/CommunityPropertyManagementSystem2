@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyPlotInfoDao">
+    
+	<sql id="wyPlotInfoColumns">
+		a.id AS "id",
+		a.plot_name AS "plotName",
+		a.build_time AS "buildTime",
+		a.remark AS "remark"
+	</sql>
+	
+	<sql id="wyPlotInfoJoins">
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyPlotInfo">
+		SELECT 
+			<include refid="wyPlotInfoColumns"/>
+		FROM wy_plot_info a
+		<include refid="wyPlotInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyPlotInfo">
+		SELECT 
+			<include refid="wyPlotInfoColumns"/>
+		FROM wy_plot_info a
+		<include refid="wyPlotInfoJoins"/>
+		<where>
+			
+			<if test="plotName != null and plotName != ''">
+				AND a.plot_name LIKE  concat('%',#{plotName},'%')
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyPlotInfo">
+		SELECT 
+			<include refid="wyPlotInfoColumns"/>
+		FROM wy_plot_info a
+		<include refid="wyPlotInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_plot_info(
+			id,
+			plot_name,
+			build_time,
+			remark
+		) VALUES (
+			#{id},
+			#{plotName},
+			#{buildTime},
+			#{remark}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_plot_info SET 	
+			plot_name = #{plotName},
+			build_time = #{buildTime},
+			remark = #{remark}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_plot_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.so.demosboot.modules.sys.dao.WyHouseFixInfoDao">
+    
+	<sql id="wyHouseFixInfoColumns">
+		a.id AS "id",
+		a.plot_id AS "plotId",
+		a.build_id AS "buildId",
+		a.house_id AS "houseId",
+		a.leader AS "leader",
+		a.tel AS "tel",
+		a.content AS "content",
+		a.report_time AS "reportTime",
+		a.is_fix AS "isFix",
+		a.fix_user AS "fixUser",
+		a.fix_time AS "fixTime",
+		a.fix_content AS "fixContent"
+	</sql>
+	
+	<sql id="wyHouseFixInfoJoins">
+	</sql>
+    
+	<select id="getById" resultType="com.so.demosboot.modules.sys.entity.WyHouseFixInfo">
+		SELECT 
+			<include refid="wyHouseFixInfoColumns"/>
+		FROM wy_house_fix_info a
+		<include refid="wyHouseFixInfoJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="com.so.demosboot.modules.sys.entity.WyHouseFixInfo">
+		SELECT 
+			<include refid="wyHouseFixInfoColumns"/>
+		FROM wy_house_fix_info a
+		<include refid="wyHouseFixInfoJoins"/>
+		<where>
+			
+			<if test="plotId != null and plotId != ''">
+				AND a.plot_id = #{plotId}
+			</if>
+			<if test="buildId != null and buildId != ''">
+				AND a.build_id = #{buildId}
+			</if>
+			<if test="houseId != null and houseId != ''">
+				AND a.house_id = #{houseId}
+			</if>
+			<if test="leader != null and leader != ''">
+				AND a.leader LIKE  concat('%',#{leader},'%')
+			</if>
+			<if test="content != null and content != ''">
+				AND a.content LIKE  concat('%',#{content},'%')
+			</if>
+			<if test="isFix != null and isFix != ''">
+				AND a.is_fix = #{isFix}
+			</if>
+		</where>
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="com.so.demosboot.modules.sys.entity.WyHouseFixInfo">
+		SELECT 
+			<include refid="wyHouseFixInfoColumns"/>
+		FROM wy_house_fix_info a
+		<include refid="wyHouseFixInfoJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wy_house_fix_info(
+			id,
+			plot_id,
+			build_id,
+			house_id,
+			leader,
+			tel,
+			content,
+			report_time,
+			is_fix,
+			fix_user,
+			fix_time,
+			fix_content
+		) VALUES (
+			#{id},
+			#{plotId},
+			#{buildId},
+			#{houseId},
+			#{leader},
+			#{tel},
+			#{content},
+			#{reportTime},
+			#{isFix},
+			#{fixUser},
+			#{fixTime},
+			#{fixContent}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wy_house_fix_info SET 	
+			plot_id = #{plotId},
+			build_id = #{buildId},
+			house_id = #{houseId},
+			leader = #{leader},
+			tel = #{tel},
+			content = #{content},
+			report_time = #{reportTime},
+			is_fix = #{isFix},
+			fix_user = #{fixUser},
+			fix_time = #{fixTime},
+			fix_content = #{fixContent}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wy_house_fix_info
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

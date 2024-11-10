@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="zxx"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="meta description">
+
+    <title>Veera - Multipurpose eCommerce Bootstrap 4 Template</title>
+
+        <!--=== Favicon ===-->
+    <link rel="shortcut icon" href="http://demo.devitems.com/veera/veera//frontui/assets/img/favicon.ico" type="image/x-icon"/>
+
+    <!--== Google Fonts ==-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+
+
+    <!--=== Revolution Slider CSS ===-->
+    <link href="/frontui/assets/css/revslider/settings.css" rel="stylesheet">
+
+    <!--=== Bootstrap CSS ===-->
+    <link href="/frontui/assets/css/vendor/bootstrap.min.css" rel="stylesheet">
+    <!--=== Font-Awesome CSS ===-->
+    <link href="/frontui/assets/css/vendor/font-awesome.css" rel="stylesheet">
+    <!--=== Dl Icon CSS ===-->
+    <link href="/frontui/assets/css/vendor/dl-icon.css" rel="stylesheet">
+    <!--=== Plugins CSS ===-->
+    <link href="/frontui/assets/css/plugins.css" rel="stylesheet">
+    <!--=== Helper CSS ===-->
+    <link href="/frontui/assets/css/helper.min.css" rel="stylesheet">
+    <!--=== Main Style CSS ===-->
+    <link href="/frontui/assets/css/style.css" rel="stylesheet">
+    
+    <!-- Modernizer JS -->
+    <script src="/frontui/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="http://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="http://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body class="preloader-active">
+
+<!-- Start Must Have Products Area -->
+<section id="mustHave-products-area" class="pt-90 pt-md-60 pt-sm-50">
+    <div class="container-fluid"  th:each="type:${categories}">
+        <div class="row">
+            <!-- Start Section title -->
+            <div class="col-lg-8 m-auto text-center">
+                <div class="section-title-wrap">
+                    <h2>[[${type.name}]]</h2>
+                </div>
+            </div>
+            <!-- End Section title -->
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="products-wrapper">
+                    <div class="product-carousel-wrap">
+                        <!-- Start Single Product -->
+                        <div class="single-product-wrap" th:each="item:${type.items}">
+                            <!-- Product Thumbnail -->
+                            <figure class="product-thumbnail">
+                                <a href="JavaScript:void(0)" class="d-block">
+                                    <img class="primary-thumb" th:src="${item.image}" src="/frontui/assets/img/products/prod-1-1.jpg" alt="Product"/>
+                                    <img class="secondary-thumb"  th:src="${item.image}" src="/frontui/assets/img/products/prod-1-2.jpg" alt="Product"/>
+                                </a>
+                                <figcaption class="product-hvr-content">
+                                    <a href="#" th:href="@{/front/detail?id=}+${item.id}" class="btn btn-black btn-addToCart">查看详情</a>
+                                    <!-- <div class="prod-btn-group">
+                                        <span data-toggle="tooltip" data-placement="top" title="Quick Shop"><button
+                                                data-toggle="modal" data-target="#quickViewModal"><i
+                                                class="dl-icon-view"></i></button></span>
+                                        <a href="wishlist.html" data-toggle="tooltip" data-placement="top"
+                                           title="Add to Wishlist"><i class="dl-icon-heart4"></i></a>
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Compare"><i
+                                                class="dl-icon-compare"></i></a>
+                                    </div> -->
+                                    <span class="product-badge">[[${item.name}]]</span>
+                                </figcaption>
+                            </figure>
+
+                            <!-- Product Details -->
+                            <div class="product-details">
+                                <h2 class="product-name"><a href="single-product.html">[[${item.name}]]</a></h2>
+                                <div class="product-prices">
+                                    <span class="oldPrice">￥[[${item.rentPrice}]]</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Single Product -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    	<br>
+    </div>
+</section>
+<!-- End Must Have Products Area -->
+
+
+
+<!--=======================Javascript============================-->
+<!--=== Jquery Min Js ===-->
+<script src="/frontui/assets/js/vendor/jquery-3.3.1.min.js"></script>
+<!--=== Jquery Migrate Min Js ===-->
+<script src="/frontui/assets/js/vendor/jquery-migrate-1.4.1.min.js"></script>
+<!--=== Popper Min Js ===-->
+<script src="/frontui/assets/js/vendor/popper.min.js"></script>
+<!--=== Bootstrap Min Js ===-->
+<script src="/frontui/assets/js/vendor/bootstrap.min.js"></script>
+<!--=== Plugins Js ===-->
+<script src="/frontui/assets/js/plugins.js"></script>
+<!--=== Ajax Mail Js ===-->
+<script src="/frontui/assets/js/ajax-mail.js"></script>
+
+<!--=== Active Js ===-->
+<script src="/frontui/assets/js/active.min.js"></script>
+
+<!--=== Revolution Slider Js ===-->
+<script src="/frontui/assets/js/revslider/jquery.themepunch.tools.min.js"></script>
+<script src="/frontui/assets/js/revslider/jquery.themepunch.revolution.min.js"></script>
+
+<!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
+<script src="/frontui/assets/js/revslider/extensions/revolution.extension.actions.min.js"></script>
+<script src="/frontui/assets/js/revslider/extensions/revolution.extension.carousel.min.js"></script>
+<script src="/frontui/assets/js/revslider/extensions/revolution.extension.kenburn.min.js"></script>
+<script src="/frontui/assets/js/revslider/extensions/revolution.extension.layeranimation.min.js"></script>
+<script src="/frontui/assets/js/revslider/extensions/revolution.extension.migration.min.js"></script>
+<script src="/frontui/assets/js/revslider/extensions/revolution.extension.navigation.min.js"></script>
+<script src="/frontui/assets/js/revslider/extensions/revolution.extension.parallax.min.js"></script>
+<script src="/frontui/assets/js/revslider/extensions/revolution.extension.slideanims.min.js"></script>
+<script src="/frontui/assets/js/revslider/extensions/revolution.extension.video.min.js"></script>
+
+
+<script src="/frontui/assets/js/revslider/revslider-active.js"></script>
+</body>
+</html>

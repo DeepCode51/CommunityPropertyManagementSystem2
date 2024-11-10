@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>设备信息管理</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+        <script src="/My97DatePicker/WdatePicker.js" type="text/javascript" th:src="@{/My97DatePicker/WdatePicker.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#inputForm").validate({
+			rules : {
+				name: {
+					required : true
+				},
+				plotId: {
+					required : true
+				},
+				isGood: {
+					required : true
+				},
+				addTime: {
+					required : true
+				},
+			},
+			messages : {
+				name: {
+					required : "设备名称必填"
+				},
+				plotId: {
+					required : "小区编号必填"
+				},
+				isGood: {
+					required : "完好程度必填"
+				},
+				addTime: {
+					required : "添加时间必填"
+				},
+			}
+		})
+		});
+	</script>
+</head>
+<body>
+	<br>
+	<form id="inputForm" action="/sys/wyEquipmentInfo/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<input type="hidden" name="id" th:value="${wyEquipmentInfo.id}" />
+			
+			<div class="form-group" id="roleSelect">
+				<label for="name" class="col-sm-1 control-label">设备名称<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="name" th:value="${wyEquipmentInfo.name}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="plotId" class="col-sm-1 control-label">小区编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+					 <select name="plotId"  class="form-control">
+						<option value="">-未选择-</option>
+						<option th:each="wyPlotInfo:${wyPlotInfos}" th:value="${wyPlotInfo.id}" th:selected="${wyPlotInfo.id==wyEquipmentInfo.plotId}" >[[${wyPlotInfo.plotName}]]</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="isGood" class="col-sm-1 control-label">完好程度<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="isGood" th:value="${wyEquipmentInfo.isGood}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="addTime" class="col-sm-1 control-label">添加时间<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="addTime" th:value="${wyEquipmentInfo.addTime}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});" readonly="readonly" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="remark" class="col-sm-1 control-label">备注</label>
+   				<div class="col-sm-6">
+			
+						 <input name="remark" th:value="${wyEquipmentInfo.remark}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			<div class="form-group" id="roleSelect">
+				<label for="firstname" class="col-sm-1 control-label"></label>
+   				<div class="col-sm-6">
+					<button class="btn btn-success" type="submit">保 存</button>
+					<button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+				</div>
+			</div>
+	</form>
+</body>
+</html>

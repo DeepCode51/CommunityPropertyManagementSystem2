@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>停车位信息管理</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#inputForm").validate({
+			rules : {
+				plotId: {
+					required : true
+				},
+				parkNo: {
+					required : true
+				},
+				parkType: {
+					required : true
+				},
+				parkStatue: {
+					required : true
+				},
+			},
+			messages : {
+				plotId: {
+					required : "小区编号必填"
+				},
+				parkNo: {
+					required : "停车位编号必填"
+				},
+				parkType: {
+					required : "停车位类型必填"
+				},
+				parkStatue: {
+					required : "停车位状态（0.未使用 1.使用）必填"
+				},
+			}
+		})
+		});
+	</script>
+</head>
+<body>
+	<br>
+	<form id="inputForm" action="/sys/wyParkInfo/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<input type="hidden" name="id" th:value="${wyParkInfo.id}" />
+			
+			<div class="form-group" id="roleSelect">
+				<label for="plotId" class="col-sm-1 control-label">小区编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+					 <select name="plotId"  class="form-control">
+						<option value="">-未选择-</option>
+						<option th:each="wyPlotInfo:${wyPlotInfos}" th:value="${wyPlotInfo.id}" th:selected="${wyPlotInfo.id==wyParkInfo.plotId}" >[[${wyPlotInfo.plotName}]]</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="parkNo" class="col-sm-1 control-label">停车位编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="parkNo" th:value="${wyParkInfo.parkNo}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="parkType" class="col-sm-1 control-label">停车位类型<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="parkType" th:value="${wyParkInfo.parkType}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="carNo" class="col-sm-1 control-label">车牌号</label>
+   				<div class="col-sm-6">
+			
+						 <input name="carNo" th:value="${wyParkInfo.carNo}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="drivers" class="col-sm-1 control-label">车主姓名</label>
+   				<div class="col-sm-6">
+			
+						 <input name="drivers" th:value="${wyParkInfo.drivers}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="tel" class="col-sm-1 control-label">联系电话</label>
+   				<div class="col-sm-6">
+			
+						 <input name="tel" th:value="${wyParkInfo.tel}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="parkStatue" class="col-sm-1 control-label">停车位状态（0.未使用 1.使用）<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="parkStatue" th:value="${wyParkInfo.parkStatue}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			<div class="form-group" id="roleSelect">
+				<label for="firstname" class="col-sm-1 control-label"></label>
+   				<div class="col-sm-6">
+					<button class="btn btn-success" type="submit">保 存</button>
+					<button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+				</div>
+			</div>
+	</form>
+</body>
+</html>

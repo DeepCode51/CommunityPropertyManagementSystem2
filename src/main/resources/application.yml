@@ -1,0 +1,20 @@
+spring:
+  thymeleaf:
+    cache: false
+  datasource:
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/graduation_159_wuye?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=UTF-8
+
+
+
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/**/*.xml
+
+
+project:
+  proName: 小区物业管理系统
+
+

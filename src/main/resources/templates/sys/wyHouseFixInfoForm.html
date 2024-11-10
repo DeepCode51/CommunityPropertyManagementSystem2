@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>住户报修信息管理</title>
+	<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" th:href="@{/bootstrap-3.3.7-dist/css/bootstrap.min.css}">
+    <link href="css/common.css" rel="stylesheet" th:href="@{/css/common.css}">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js" th:src="@{/js/jquery-1.12.4.min.js}"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js" th:src="@{/bootstrap-3.3.7-dist/js/bootstrap.min.js}"></script>
+        <script src="/My97DatePicker/WdatePicker.js" type="text/javascript" th:src="@{/My97DatePicker/WdatePicker.js}"></script>
+    <script src="jquery-validation-1.14.0/lib/jquery.js" th:src="@{/jquery-validation-1.14.0/lib/jquery.js}"></script>
+    <script src="jquery-validation-1.14.0/dist/jquery.validate.min.js" th:src="@{/jquery-validation-1.14.0/dist/jquery.validate.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#inputForm").validate({
+			rules : {
+				plotId: {
+					required : true
+				},
+				buildId: {
+					required : true
+				},
+				houseId: {
+					required : true
+				},
+				leader: {
+					required : true
+				},
+				tel: {
+					required : true
+				},
+				content: {
+					required : true
+				},
+				reportTime: {
+					required : true
+				},
+			},
+			messages : {
+				plotId: {
+					required : "小区编号必填"
+				},
+				buildId: {
+					required : "楼房编号必填"
+				},
+				houseId: {
+					required : "房号必填"
+				},
+				leader: {
+					required : "报修人必填"
+				},
+				tel: {
+					required : "联系电话必填"
+				},
+				content: {
+					required : "报修说明必填"
+				},
+				reportTime: {
+					required : "报修时间必填"
+				},
+			}
+		})
+		});
+	</script>
+</head>
+<body>
+	<br>
+	<form id="inputForm" action="/sys/wyHouseFixInfo/save" method="post" class="form-horizontal"  enctype="multipart/form-data">
+		<input type="hidden" name="id" th:value="${wyHouseFixInfo.id}" />
+			
+			<div class="form-group" id="roleSelect">
+				<label for="plotId" class="col-sm-1 control-label">小区编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="plotId" th:value="${wyHouseFixInfo.plotId}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="buildId" class="col-sm-1 control-label">楼房编号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="buildId" th:value="${wyHouseFixInfo.buildId}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="houseId" class="col-sm-1 control-label">房号<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="houseId" th:value="${wyHouseFixInfo.houseId}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="leader" class="col-sm-1 control-label">报修人<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="leader" th:value="${wyHouseFixInfo.leader}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="tel" class="col-sm-1 control-label">联系电话<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="tel" th:value="${wyHouseFixInfo.tel}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="content" class="col-sm-1 control-label">报修说明<b class="error">*</b></label>
+   				<div class="col-sm-6">
+					<textarea rows="" cols="" name="content" class="form-control">[[${wyHouseFixInfo.content}]]</textarea>
+						
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="reportTime" class="col-sm-1 control-label">报修时间<b class="error">*</b></label>
+   				<div class="col-sm-6">
+			
+						 <input name="reportTime" th:value="${wyHouseFixInfo.reportTime}" 
+ onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});" readonly="readonly"  class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="isFix" class="col-sm-1 control-label">是否处理</label>
+   				<div class="col-sm-6">
+			
+						 <select class="form-control" name="isFix">
+						<option value="1" th:selected="${wyHouseFixInfo.isFix=='1'}">是</option>
+						<option value="0" th:selected="${wyHouseFixInfo.isFix=='0'}">否</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="fixUser" class="col-sm-1 control-label">维修人</label>
+   				<div class="col-sm-6">
+			
+						 <input name="fixUser" th:value="${wyHouseFixInfo.fixUser}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="fixTime" class="col-sm-1 control-label">维修时间</label>
+   				<div class="col-sm-6">
+			
+						 <input name="fixTime" th:value="${wyHouseFixInfo.fixTime}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});" readonly="readonly"  class="form-control"/>
+				</div>
+			</div>
+			
+			<div class="form-group" id="roleSelect">
+				<label for="fixContent" class="col-sm-1 control-label">维修说明</label>
+   				<div class="col-sm-6">
+			
+						 <input name="fixContent" th:value="${wyHouseFixInfo.fixContent}" maxlength="255" class="form-control"/>
+				</div>
+			</div>
+			<div class="form-group" id="roleSelect">
+				<label for="firstname" class="col-sm-1 control-label"></label>
+   				<div class="col-sm-6">
+					<button class="btn btn-success" type="submit">保 存</button>
+					<button class="btn btn-inf" type="button" onclick="javascript:history.go(-1);">返 回</button>
+				</div>
+			</div>
+	</form>
+</body>
+</html>
